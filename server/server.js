@@ -18,5 +18,6 @@ db.authenticate()
 
 app.use("/api/v1/drivers", require("./routes/driver"));
 app.use("/api/v1/jeepneys", require("./routes/jeepney"));
+app.use("/api/v1/barangays", require("./routes/barangay"));
 
 app.listen(PORT, () => console.log("Listent at port " + PORT));

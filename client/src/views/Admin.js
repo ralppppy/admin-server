@@ -2,6 +2,7 @@ import React, { Suspense, useState, useEffect } from "react";
 import "../App.css"
 import Dashboard from './Dashboard';
 import JeepneyDasboard from './JeepneyDasboard'
+import BarangayDashboard from './BarangayDashboard'
 
 import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
@@ -73,7 +74,7 @@ function Admin() {
           case'2':
             return <JeepneyDasboard/>;
           case'3':
-            return 'Content3';
+            return <BarangayDashboard/>;
           case'4':
             return 'Content4';
           case '':
