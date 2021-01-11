@@ -1,8 +1,9 @@
 import React, { Suspense, useState, useEffect } from "react";
 import "../App.css"
 import Dashboard from './Dashboard';
-import JeepneyDasboard from './JeepneyDasboard'
-import BarangayDashboard from './BarangayDashboard'
+import JeepneyDasboard from './JeepneyDasboard';
+import BarangayDashboard from './BarangayDashboard';
+import UploadDashboard from './UploadDashboard';
 
 import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
@@ -46,16 +47,16 @@ function Admin() {
       <Menu theme="dark" mode="inline" defaultSelectedKeys={['']}>
           <Imaged/>
         <Menu.Item key="1" icon={<UserOutlined />} onClick={() => clickSideBar('1')}>
-          nav 1
+          Drivers
         </Menu.Item>
         <Menu.Item key="2" icon={<VideoCameraOutlined />}onClick={() => clickSideBar('2')}>
-          nav 2
+          Jeepneys
         </Menu.Item>
         <Menu.Item key="3" icon={<UploadOutlined />} onClick={() => clickSideBar('3')}>
-          nav 3
+          Barangays
         </Menu.Item>
         <Menu.Item key="4" icon={<UserOutlined />}onClick={() => clickSideBar('4')}>
-          nav 4
+          Image Upload
         </Menu.Item>
       </Menu>
     </Sider>
@@ -76,7 +77,7 @@ function Admin() {
           case'3':
             return <BarangayDashboard/>;
           case'4':
-            return 'Content4';
+            return <UploadDashboard/>;
           case '':
             return 'Welcome';
           }
