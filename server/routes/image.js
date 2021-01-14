@@ -2,13 +2,36 @@ const router = require("express").Router();
 const Image = require("../models/Image");
 const randomString = require("randomstring");
 
-
 router.get("/", (req, res) => {
- 
   Image.findAll()
     .then((response) => {
       console.log(response);
       res.json(response);
+    })
+    .catch((error) => console.log(error));
+});
+
+router.post("/search_images", (req, res) => {
+  let { imageOwnerId, imageReferenceId } = req.body;
+  Image.findAll({
+    where: {
+      [Op.and]: [
+        {
+          imageOwnerId: {
+            [Op.like]: imageOwnerId,
+          },
+        },
+        {
+          imageReferenceId: {
+            [Op.like]: imageReferenceId,
+          },
+        },
+      ],
+    },
+  })
+    .then((_res) => {
+      res.json(_res);
+      console.log(res);
     })
     .catch((error) => console.log(error));
 });
@@ -24,7 +47,7 @@ router.delete("/delete_Image", (req, res) => {
 });
 
 router.post("/save_image", (req, res) => {
-  console.log("add to db")
+  console.log("add to db");
   let { imageOwnerId, imageReferenceId, imagePath } = req.body;
 
   Image.create({ imageOwnerId, imageReferenceId, imagePath })
@@ -36,29 +59,29 @@ router.post("/save_image", (req, res) => {
 
 //Uploading Images
 router.post("/add_image", (req, res) => {
-    console.log("Uploading");
-    if (req.files === null) {
-      return res.status(400).json({ msg: "No image uploaded!" });
-    }
-    console.log(req.files.file)
-    const file = req.files.file;
-    const randomFileName = randomString.generate(15);
-    const splitFile = file.name.split(".");
-    //console.log(file)
-    file.mv(
-      `${__dirname}/../../client/public/uploadImage/${randomFileName}.${splitFile[1]}`,
-      (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send(err);
-        }
-        res.json({
-          fileName: file.name,
-          filePath: `/uploadImage/${randomFileName}.${splitFile[1]}`,
-        });
+  console.log("Uploading");
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No image uploaded!" });
+  }
+  console.log(req.files.file);
+  const file = req.files.file;
+  const randomFileName = randomString.generate(15);
+  const splitFile = file.name.split(".");
+  //console.log(file)
+  file.mv(
+    `${__dirname}/../../client/public/uploadImage/${randomFileName}.${splitFile[1]}`,
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
       }
-    );
-    // console.log(file.filePath);
-  });
+      res.json({
+        fileName: file.name,
+        filePath: `/uploadImage/${randomFileName}.${splitFile[1]}`,
+      });
+    }
+  );
+  // console.log(file.filePath);
+});
 
 module.exports = router;

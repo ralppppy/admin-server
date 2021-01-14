@@ -11,7 +11,7 @@ import {
 } from "antd";
 import axios from "axios";
 import { Content } from "antd/lib/layout/layout";
-
+import { ModalImageUpload } from "../../components/ModalImageUpload";
 
 const { Title, Text } = Typography;
 
@@ -20,20 +20,19 @@ function StudentChartShit() {
   const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
-    // sfsfsdfsdfsdf
-   
-    axios.get("/api/v1/drivers/")
+    axios
+      .get("/api/v1/drivers/")
       .then((res) => {
         console.log(res);
 
         let data = res.data;
-       setDrivers(data);
+        setDrivers(data);
       })
       .catch((error) => console.log(error));
   }, []);
 
   const onFinish = (values) => {
-    console.log(values)
+    console.log(values);
     axios
       .post("/api/v1/drivers/add_driver", values)
       .then((res) => {
@@ -41,7 +40,7 @@ function StudentChartShit() {
 
         driversCopy = [...driversCopy, res.data];
         console.log(driversCopy);
-       setDrivers(driversCopy);
+        setDrivers(driversCopy);
       })
       .catch((error) => console.log(error));
   };
@@ -52,8 +51,7 @@ function StudentChartShit() {
   };
 
   const checking = () => {
-    console.log("check")
-    
+    console.log("check");
   };
 
   const handleDelete = (id) => {
@@ -67,7 +65,7 @@ function StudentChartShit() {
         let driversCopy = [...drivers];
 
         driversCopy = driversCopy.filter((driver) => driver.id !== id);
-       setDrivers(driversCopy);
+        setDrivers(driversCopy);
 
         console.log(driversCopy);
       })
@@ -93,7 +91,9 @@ function StudentChartShit() {
         <Form.Item
           label="Middle Name"
           name="middleName"
-          rules={[{ required: true, message: "Please input your Middle Name!" }]}
+          rules={[
+            { required: true, message: "Please input your Middle Name!" },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -117,7 +117,9 @@ function StudentChartShit() {
         <Form.Item
           label="Contact Number"
           name="contactNumber"
-          rules={[{ required: true, message: "Please input your contact Number!" }]}
+          rules={[
+            { required: true, message: "Please input your contact Number!" },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -139,7 +141,7 @@ function StudentChartShit() {
         </Form.Item>
 
         <Form.Item>
-          <Button onClick={() => checking()}type="primary" htmlType="submit">
+          <Button onClick={() => checking()} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
@@ -151,18 +153,17 @@ function StudentChartShit() {
             <Title>
               {driver.firstName} {driver.middleName} {driver.lastName}
             </Title>
-            <Content>
-              {driver.address}
-            </Content>
-            <Content>
-              {driver.contactNumber}
-            </Content>
-            <Content>
-              {driver.email}
-            </Content>
+            <Content>{driver.address}</Content>
+            <Content>{driver.contactNumber}</Content>
+            <Content>{driver.email}</Content>
             <Button onClick={() => handleDelete(driver.id)} danger>
               Delete
             </Button>
+            <ModalImageUpload
+              info={drivers[index]}
+              userType={"DRIVER"}
+              imageReferenceId={1}
+            />
           </Card>
         </Col>
       ))}
