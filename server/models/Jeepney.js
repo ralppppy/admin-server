@@ -19,11 +19,6 @@ const Jeepney = db.define("jeepneys", {
     allowNull: false,
   },
 
-  jeepImage: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-
   jeepCapacity: {
     type: Sequelize.INTEGER,
     allowNull: false,

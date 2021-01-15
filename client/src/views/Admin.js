@@ -5,6 +5,7 @@ import JeepneyDasboard from "./JeepneyDasboard";
 import BarangayDashboard from "./BarangayDashboard";
 import UploadDashboard from "./UploadDashboard";
 import DriversTableListContent from "./DriversTableListContent";
+import BarangaysTableListContent from "./BarangaysTableListContent";
 
 import { Layout, Menu } from "antd";
 import {
@@ -13,7 +14,6 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import Imaged from "./Imaged";
-import DriversTableList from "../components/DriversTableList/DriversTableList";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -80,6 +80,13 @@ function Admin() {
               >
                 Driver List
               </Menu.Item>
+              <Menu.Item
+                key="6"
+                icon={<UploadOutlined />}
+                onClick={() => clickSideBar("6")}
+              >
+                Barangay List
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout>
@@ -107,6 +114,8 @@ function Admin() {
                       return <UploadDashboard />;
                     case "5":
                       return <DriversTableListContent />;
+                    case "6":
+                      return <BarangaysTableListContent />;
                     case "":
                       return "Welcome";
                   }

@@ -14,52 +14,44 @@ router.get("/", (req, res) => {
 });
 
 router.post("/search_drivers", (req, res) => {
-  let {
-    id,
-    firstName,
-    middleName,
-    lastName,
-    contactNumber,
-    address,
-    email,
-  } = req.body;
+  let { value } = req.body;
 
   Driver.findAll({
     where: {
       [Op.or]: [
         {
           id: {
-            [Op.like]: id,
+            [Op.like]: value,
           },
         },
         {
           firstName: {
-            [Op.like]: "%" + firstName + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
         {
           middleName: {
-            [Op.like]: "%" + middleName + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
         {
           lastName: {
-            [Op.like]: "%" + lastName + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
         {
           contactNumber: {
-            [Op.like]: "%" + contactNumber + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
         {
           address: {
-            [Op.like]: "%" + address + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
         {
           email: {
-            [Op.like]: "%" + email + "%",
+            [Op.like]: "%" + value + "%",
           },
         },
       ],

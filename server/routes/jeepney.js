@@ -12,12 +12,11 @@ router.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-
 router.post("/add_jeep", (req, res) => {
-  console.log("add to jeep table")
-  let { driverId, plateNumber, jeepImage, jeepCapacity } = req.body;
+  console.log("add to jeep table");
+  let { driverId, plateNumber, jeepCapacity } = req.body;
 
-  Jeepney.create({ driverId, plateNumber, jeepImage, jeepCapacity })
+  Jeepney.create({ driverId, plateNumber, jeepCapacity })
     .then((response) => {
       res.json(response);
     })

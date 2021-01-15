@@ -3,6 +3,9 @@ import { Modal, Button } from "antd";
 
 function DriversInfoModal(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalValue, setModalValue] = useState("");
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [ifCanceled, setIfCanceled] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -11,11 +14,24 @@ function DriversInfoModal(props) {
   };
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    props.passedData(props.info);
+    setConfirmLoading(true);
+    setIfCanceled(false);
+    setTimeout(() => {
+      setIsModalVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
   };
 
   const handleCancel = () => {
+    setIfCanceled(true);
     setIsModalVisible(false);
+  };
+  const handleClose = () => {
+    if (ifCanceled) {
+    } else {
+      props.afterClosing();
+    }
   };
   return (
     <div>
@@ -25,8 +41,10 @@ function DriversInfoModal(props) {
       <Modal
         title="Driver Info"
         visible={isModalVisible}
+        confirmLoading={confirmLoading}
         onOk={handleOk}
         onCancel={handleCancel}
+        afterClose={handleClose}
       >
         <h1></h1>
         <p>

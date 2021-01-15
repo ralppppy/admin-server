@@ -5,68 +5,10 @@ import Column from "antd/lib/table/Column";
 import ColumnGroup from "antd/lib/table/ColumnGroup";
 import DriversInfoModal from "./DriversInfoModal";
 
-// const columns = [
-//   {
-//     title: "Name",
-//     dataIndex: [{ dataIndex: "firstName" }],
-//     width: 100,
-//     key: "name",
-//     fixed: "left",
-//     render: (text) => <a>{text}</a>,
-//   },
-//   {
-//     title: "Contact Number",
-//     dataIndex: "contactNumber",
-//     key: "contactNumber",
-//   },
-//   {
-//     title: "Address",
-//     dataIndex: "address",
-//     key: "address",
-//   },
-//   {
-//     title: "Email",
-//     dataIndex: "email",
-//     key: "email",
-//   },
-//   {
-//     title: "Tags",
-//     key: "tags",
-//     dataIndex: "tags",
-
-//     // render: (tags) => (
-//     //   <>
-//     //     {tags.map((tag) => {
-//     //       let color = tag.length > 5 ? "geekblue" : "green";
-//     //       if (tag === "loser") {
-//     //         color = "volcano";
-//     //       }
-//     //       return (
-//     //         <Tag color={color} key={tag}>
-//     //           {tag.toUpperCase()}
-//     //         </Tag>
-//     //       );
-//     //     })}
-//     //   </>
-//     // ),
-//   },
-//   {
-//     title: "Action",
-//     key: "action",
-//     width: 120,
-//     fixed: "right",
-//     render: (text, record) => (
-//       <Space size="middle">
-//         <a>Invite </a>
-//         <a>Delete</a>
-//       </Space>
-//     ),
-//   },
-// ];
-
 function DriversTableList() {
   const [drivers, setDrivers] = useState([]);
   const { Search } = Input;
+  const [dataFromModal, setDataFromModal] = useState("");
 
   useEffect(() => {
     axios
@@ -82,15 +24,7 @@ function DriversTableList() {
 
   const onSearch = (value) => {
     axios
-      .post("/api/v1/drivers/search_drivers", {
-        id: value,
-        firstName: value,
-        middleName: value,
-        lastName: value,
-        contactNumber: value,
-        address: value,
-        email: value,
-      })
+      .post("/api/v1/drivers/search_drivers", { value: value })
       .then((_res) => {
         console.log(_res);
         let data = _res.data;
@@ -101,8 +35,8 @@ function DriversTableList() {
     console.log(value);
   };
 
-  const viewDetails = (value) => {
-    console.log(value);
+  const modalClosed = () => {
+    console.log("Passed data from modal", dataFromModal);
   };
 
   return (
@@ -138,7 +72,11 @@ function DriversTableList() {
           fixed="right"
           render={(value) => (
             <Space>
-              <DriversInfoModal info={value} />
+              <DriversInfoModal
+                info={value}
+                passedData={setDataFromModal}
+                afterClosing={modalClosed}
+              />
             </Space>
           )}
         ></ColumnGroup>
