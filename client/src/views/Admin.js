@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import JeepneyDasboard from "./JeepneyDasboard";
 import BarangayDashboard from "./BarangayDashboard";
 import UploadDashboard from "./UploadDashboard";
+import DriversTableListContent from "./DriversTableListContent";
 
 import { Layout, Menu } from "antd";
 import {
@@ -12,6 +13,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import Imaged from "./Imaged";
+import DriversTableList from "../components/DriversTableList/DriversTableList";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -71,6 +73,13 @@ function Admin() {
               >
                 Image Upload
               </Menu.Item>
+              <Menu.Item
+                key="5"
+                icon={<UserOutlined />}
+                onClick={() => clickSideBar("5")}
+              >
+                Driver List
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout>
@@ -78,7 +87,7 @@ function Admin() {
               className="site-layout-sub-header-background"
               style={{ padding: 0, textAlign: "center" }}
             >
-              <h1>Retrack Admin</h1>
+              <h1 style={{ color: "white" }}>Retrack Admin</h1>
             </Header>
             <Content style={{ margin: "24px 16px 0" }}>
               <div
@@ -96,6 +105,8 @@ function Admin() {
                       return <BarangayDashboard />;
                     case "4":
                       return <UploadDashboard />;
+                    case "5":
+                      return <DriversTableListContent />;
                     case "":
                       return "Welcome";
                   }

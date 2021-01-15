@@ -15,7 +15,6 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import ImageUploadDashboard from "./ImageUploadDashboard";
 
-import reqwest from "reqwest";
 import axios from "axios";
 
 function ImageUpload(props) {
